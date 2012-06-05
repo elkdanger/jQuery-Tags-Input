@@ -209,6 +209,7 @@
 	      height: 'auto',
 	      autocomplete: null,
 	      autocompleteselect: null,
+	      onlyautocomplete: false,
 	      'hide':true,
 	      'delimiter':',',
 	      'unique':true,
@@ -323,7 +324,7 @@
 				$(data.fake_input).on('blur',data,function(event) { 
 					if ($(event.data.fake_input).val()!='' && $(event.data.fake_input).val()!=event.data.defaultText) {
 						if (!$(this).data('autocompleteopen')) { 
-							if( (event.data.minChars <= $(event.data.fake_input).val().length) && (!event.data.maxChars || (event.data.maxChars >= $(event.data.fake_input).val().length)) )
+							if(event.data.onlyautocomplete == false && (event.data.minChars <= $(event.data.fake_input).val().length) && (!event.data.maxChars || (event.data.maxChars >= $(event.data.fake_input).val().length)) )
 								$(event.data.real_input).addTag($(event.data.fake_input).val(),{focus:true,unique:(settings.unique)});
 						} else {
 							// autocomplete is open, do not add tag because 
@@ -342,7 +343,7 @@
 				$(data.fake_input).on('keypress',data,function(event) {
 					if (event.which==event.data.delimiter.charCodeAt(0) || event.which==13 ) {
 					    event.preventDefault();
-						if( (event.data.minChars <= $(event.data.fake_input).val().length) && (!event.data.maxChars || (event.data.maxChars >= $(event.data.fake_input).val().length)) )
+						if(event.data.onlyautocomplete == false && (event.data.minChars <= $(event.data.fake_input).val().length) && (!event.data.maxChars || (event.data.maxChars >= $(event.data.fake_input).val().length)) )
 							$(event.data.real_input).addTag($(event.data.fake_input).val(),{focus:true,unique:(settings.unique)});
 					  	$(event.data.fake_input).resetAutosize(settings);
 						return false;
