@@ -286,7 +286,14 @@
 						$(event.data.fake_input).val('');
 					}
 					// set the field to the active color
-					$(event.data.fake_input).css('color','#000000');		
+					$(event.data.fake_input).css('color','#000000');
+
+					if (settings.autocomplete) {
+						var minLen = $(event.data.fake_input).autocomplete('option','minLength');
+						if ($(event.data.fake_input).val().length >= minLen) {
+							$(event.data.fake_input).autocomplete('search');
+						}
+					}
 				});
 			
 				// if an autocomplete has been specified, do some stuff…			
