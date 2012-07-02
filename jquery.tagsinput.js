@@ -360,21 +360,16 @@
           			}
 				});
 
-				$(data.fake_input).on('keydown',data, function(event)
+				//Delete last tag on backspace
+				data.removeWithBackspace && $(data.fake_input).on('keydown',data, function(event)
 				{
-					//Delete last tag on backspace
-					if(data.removeWithBackspace && event.keyCode == 8 && $(this).val() == '')
+					if(event.keyCode == 8 && $(this).val() == '')
 					{
 						 event.preventDefault();
 						 var last_tag = $(this).closest('.tagsinput').find('.tag:last').text();
 						 last_tag = last_tag.replace(/[\s]+x$/, '');
 						 $(data.real_input).removeTag(escape(last_tag));
 						 $(this).trigger('focus');
-					}
-					if (event.keyCode == 32 && event.ctrlKey) {
-						if (!$(this).data('autocompleteopen')) {
-							$(this).autocomplete('search');
-						}
 					}
 				});
 				$(data.fake_input).blur();
