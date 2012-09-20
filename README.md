@@ -83,6 +83,9 @@ By default, if the cursor is immediately after a tag, hitting backspace will
 delete that tag. If you want to override this, set the 'removeWithBackspace' 
 option to false.
 
+You can specify an alternative jQuery object to use as the tag by supplying a callback function to 'onCreateTag'. You should
+return a jQuery object from this function which represents the element you would like to use. The class 'tag' is applied for you if you do not set it, and you should supply an element with the attribute of "rel='remove'" to use as the delete element.
+
 ## Options
 
 	$(selector).tagsInput({
@@ -94,6 +97,7 @@ option to false.
 	   'defaultText':'add a tag',
 	   'onAddTag':callback_function,
 	   'onRemoveTag':callback_function,
+	   'onCreateTag':callback_function,
 	   'onChange' : callback_function,
 	   'removeWithBackspace' : true,
 	   'minChars' : 0,

@@ -1,4 +1,4 @@
-/*
+﻿/*
 
 	jQuery Tags Input Plugin 2.0
 	
@@ -19,6 +19,17 @@
 	add tag input validation
 	make sure autocomplete works with newest jquery
 
+
+*/
+
+/*
+    MODIFIED SEPTEMBER 2012
+    Steve Hobbs
+    Orchid Software
+
+    https://github.com/elkdanger/jQuery-Tags-Input
+
+    - Added callback handler for specifying custom tag html, in place of the default
 
 */
 
@@ -120,17 +131,40 @@
 					}
 				}
 				
-				if (value !='' && skipTag != true) { 
-                    $('<span>').addClass('tag').append(
-                        $('<span>').text(value).append('&nbsp;&nbsp;'),
-                        $('<a>', {
-                            href  : '#',
-                            title : settings.removeText,
-                            text  : 'x'
-                        }).click(function () {
-                            return $(settings.real_input).removeTag(escape(value));
-                        })
-                    ).insertBefore(settings.input_wrapper);
+				if (value != '' && skipTag != true) {
+				    
+				    // Defer to our 'onCreateTag' event handler if a callback is available
+				    if (settings.onCreateTag) {
+
+				        var customTag = $(settings.onCreateTag(value));
+
+				        if (!customTag.hasClass("tag"))
+				            customTag.addClass("tag");
+
+				        customTag.find("[rel='remove']")
+                            .attr({
+                                href: "#",
+                                title: settings.removeText,
+                            })
+                            .click(function () {
+                                return $(settings.real_input).removeTag(escape(value));
+                            });
+                        
+                        customTag.insertBefore(settings.input_wrapper);
+
+				    } else {
+
+				        $('<span>').addClass('tag').append(
+                            $('<span>').text(value).append('&nbsp;&nbsp;'),
+                            $('<a>', {
+                                href: '#',
+                                title: settings.removeText,
+                                text: 'x'
+                            }).click(function () {
+                                return $(settings.real_input).removeTag(escape(value));
+                            })
+                        ).insertBefore(settings.input_wrapper);
+				    }
 
 					tagslist.push(value);
 				
@@ -222,7 +256,8 @@
 	      onAddTag: null,
 	      onRemoveTag: null,
 	      validateTag: null,
-	      onError: null
+	      onError: null,
+          onCreateTag: null     // callback for tag html creation
 	    },options);
 
 		this.each(function() { 
