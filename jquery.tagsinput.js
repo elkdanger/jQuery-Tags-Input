@@ -239,7 +239,7 @@
 	      removeText:'Remove Tag',
 	      minChars:0,
 	      width:'auto',
-	      minHeight:'100px',
+	      minHeight:'none',
 	      height: 'auto',
 	      autocomplete: null,
 	      autocompleteselect: null,
