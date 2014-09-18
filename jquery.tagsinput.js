@@ -401,6 +401,18 @@
                     return false;
                 });
 
+		// if user pastes a string in remove the delmiters they have pasted otherwise it will break on backspace
+                $(data.fake_input).on('paste', data, function (event) {
+                    setTimeout(function() {
+                        var input = $(event.data.fake_input);
+                        var val = input.val();
+
+                        var regex = new RegExp(event.data.delimiter, "g");
+                        val = val.replace(regex, "");
+
+                        input.val(val);
+                    }, 0);
+                });
 
                 // if user types a comma, create a new tag
                 $(data.fake_input).on('keypress', data, function (event) {
