@@ -420,6 +420,8 @@
                         event.preventDefault();
                         if (event.data.onlyautocomplete == false && (event.data.minChars <= $(event.data.fake_input).val().length)) {
                             if ($.fn.tagsInput.validateMaxChars(settings, event)) {
+                            	$(".ui-autocomplete").hide();
+                                $(event.data.fake_input).trigger('autocompleteclose', [data]);
                                 $(event.data.real_input).addTag($(event.data.fake_input).val(), { focus: true, unique: (settings.unique) });
                                 $(event.data.fake_input).resetAutosize(settings);
                             }
