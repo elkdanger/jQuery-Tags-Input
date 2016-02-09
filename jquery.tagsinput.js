@@ -286,7 +286,9 @@
             onRemoveTag: null,
             validateTag: null,
             onError: null,
-            onCreateTag: null     // callback for tag html creation
+            onCreateTag: null,     // callback for tag html creation
+			automatedId: "TagInput",
+			validationContainer: null
         }, options);
 
         this.each(function () {
@@ -407,6 +409,11 @@
                         $(event.data.fake_input).val(event.data.defaultText);
                         $(event.data.fake_input).css('color', event.data.placeholderColor);
                         $(event.data.fake_input).removeClass('not_valid');
+						
+						if (settings.validationContainer) {
+                            $(settings.validationContainer).removeClass("error");
+                            $(settings.validationContainer).closest("form").validate().resetForm();
+                        }
                     }
                     return false;
                 });
@@ -465,6 +472,11 @@
                     $(data.fake_input).keydown(function (event) {
                         if (event.keyCode == 8 || String.fromCharCode(event.which).match(/\w+|[áéíóúÁÉÍÓÚñÑ,/]+/)) {
                             $(this).removeClass('not_valid');
+							
+							if (settings.validationContainer) {
+								$(settings.validationContainer).removeClass("error");
+								$(settings.validationContainer).closest("form").validate().resetForm();
+							}	
                         }
                     });
                 }
