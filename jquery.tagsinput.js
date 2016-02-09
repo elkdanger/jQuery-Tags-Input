@@ -127,12 +127,22 @@
                         var f = settings.onError;
                         f.call(this, 'validation');
                     }
-
                 }
             }
 
+			if (value != '' && skipTag != true) {
+                value = value.replace(/<[^\s][^>]*>?/g, ' ').trim();
+                if (value == '') {
+                    skipTag = true;
+                    $(settings.fake_input).addClass('not_valid');
+                    if (settings.onError) {
+                        var f = settings.onError;
+                        f.call(this, 'invalidchar');
+                    }
+                }
+            }
+			
             if (value != '' && skipTag != true) {
-
                 // Defer to our 'onCreateTag' event handler if a callback is available
                 if (settings.onCreateTag) {
 
@@ -491,6 +501,11 @@
             $(event.data.fake_input).addClass('not_valid');
             $(event.data.fake_input).css("width", "100%");
             $(event.data.fake_input).parent(".tagsinput_inputwrapper").css("width", "100%");
+			
+			if (settings.onError) {
+                var f = settings.onError;
+                f.call(this, 'length');
+            }
         }
 
         return isValid;
