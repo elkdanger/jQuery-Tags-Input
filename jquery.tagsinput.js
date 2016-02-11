@@ -288,7 +288,8 @@
             onError: null,
             onCreateTag: null,     // callback for tag html creation
 			automatedId: "TagInput",
-			validationContainer: null
+			validationContainer: null,
+			hidden: false
         }, options);
 
         this.each(function () {
@@ -309,10 +310,11 @@
 
             $(this).addClass('tagsinput_processed');
 
-            var markup = '<div id="' + id + '_tagsinput" class="tagsinput"><div id="' + id + '_addTag" class="tagsinput_inputwrapper">';
+            var markup = '<div id="' + id + '_tagsinput" class="tagsinput" style="display:' + (settings.hidden ? 'none;' : '') + '"><div id="' + id + '_addTag" class="tagsinput_inputwrapper">';
 
             if (settings.interactive) {
-                markup = markup + '<input id="' + id + '_tag" value="" data-default="' + settings.defaultText + '" />';
+                markup = markup + '<input type="text" data-automated-id="' + settings.automatedId + '" id="' + id + '_tag" value=""' +
+                    ' data-default="' + settings.defaultText + '" maxlength="35" />';
             }
 
             markup = markup + '</div><div class="tags_clear"></div></div>';
